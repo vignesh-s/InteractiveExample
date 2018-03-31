@@ -24,38 +24,23 @@ extension State {
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var bottomButtonBar: UIStackView!
+    @IBOutlet weak var popupView: UIView!
+    @IBOutlet weak var popupViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomButtonBar: UIView!
     
-    private let popupOffset: CGFloat = 240
-    
-    private lazy var popupView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
-    }()
+    private let popupOffset: CGFloat = -230
 
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
         popupView.addGestureRecognizer(panRecognizer)
     }
-
-    private var bottomConstraint = NSLayoutConstraint()
     
     private func layout() {
         
-        popupView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(popupView)
         popupView.layer.cornerRadius = 15
         popupView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        popupView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        popupView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        bottomConstraint = popupView.bottomAnchor
-            .constraint(equalTo: bottomButtonBar.topAnchor, constant: popupOffset)
-        
-        bottomConstraint.isActive = true
-        popupView.heightAnchor.constraint(equalToConstant: 400).isActive = true
-        view.bringSubview(toFront: bottomButtonBar)
+        popupViewBottomConstraint.constant = popupOffset
     }
     
     // MARK: - Animation
@@ -85,10 +70,10 @@ class ViewController: UIViewController {
         let transitionAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1, animations: {
             switch state {
             case .open:
-                self.bottomConstraint.constant = 0
+                self.popupViewBottomConstraint.constant = 0
                 self.popupView.layer.cornerRadius = 15
             case .closed:
-                self.bottomConstraint.constant = self.popupOffset
+                self.popupViewBottomConstraint.constant = self.popupOffset
                 self.popupView.layer.cornerRadius = 15
             }
             self.view.layoutIfNeeded()
@@ -110,9 +95,9 @@ class ViewController: UIViewController {
             // manually reset the constraint positions
             switch self.currentState {
             case .open:
-                self.bottomConstraint.constant = 0
+                self.popupViewBottomConstraint.constant = 0
             case .closed:
-                self.bottomConstraint.constant = self.popupOffset
+                self.popupViewBottomConstraint.constant = self.popupOffset
             }
             
             // remove all running animators
