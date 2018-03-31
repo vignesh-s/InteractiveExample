@@ -27,6 +27,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var popupViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomButtonBar: UIView!
+    @IBOutlet weak var wateringInfo: UIStackView!
+    @IBOutlet weak var plantsInfo: UIStackView!
     
     private let popupOffset: CGFloat = -230
 
@@ -41,6 +43,9 @@ class ViewController: UIViewController {
         popupView.layer.cornerRadius = 15
         popupView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         popupViewBottomConstraint.constant = popupOffset
+        
+        wateringInfo.alpha = 0
+        plantsInfo.alpha = 0
     }
     
     // MARK: - Animation
@@ -105,11 +110,33 @@ class ViewController: UIViewController {
             
         }
         
+        var curve: UIViewAnimationCurve
+        if state == .open {
+            curve = .easeIn
+        } else {
+            curve = .easeOut
+        }
+        let infoFadeAnimation =
+            UIViewPropertyAnimator(duration: duration, curve: curve, animations: {
+                
+                switch state {
+                case .open:
+                    self.wateringInfo.alpha = 1
+                    self.plantsInfo.alpha = 1
+                case .closed:
+                    self.wateringInfo.alpha = 0
+                    self.plantsInfo.alpha = 0
+                }
+        })
+        infoFadeAnimation.scrubsLinearly = false
+        
         // start all animators
         transitionAnimator.startAnimation()
+        infoFadeAnimation.startAnimation()
         
         // keep track of all running animators
         runningAnimators.append(transitionAnimator)
+        runningAnimators.append(infoFadeAnimation)
         
     }
     

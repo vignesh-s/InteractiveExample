@@ -354,8 +354,10 @@
                     </view>
                     <connections>
                         <outlet property="bottomButtonBar" destination="BbJ-JA-dO3" id="4L3-us-ulI"/>
+                        <outlet property="plantsInfo" destination="RVM-qS-2nx" id="IrJ-pA-NzR"/>
                         <outlet property="popupView" destination="ZwK-si-eWB" id="pRe-3s-Hci"/>
                         <outlet property="popupViewBottomConstraint" destination="AdP-n7-NMf" id="Agz-nm-mqz"/>
+                        <outlet property="wateringInfo" destination="Mwd-k3-Tch" id="Nsj-Bl-961"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
