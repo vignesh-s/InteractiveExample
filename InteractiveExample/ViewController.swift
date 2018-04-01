@@ -157,7 +157,7 @@ class ViewController: UIViewController {
             
             // variable setup
             let translation = recognizer.translation(in: popupView)
-            var fraction = -translation.y / popupOffset
+            var fraction = -translation.y / -popupOffset
             
             // adjust the fraction for the current state and reversed state
             if currentState == .open { fraction *= -1 }
