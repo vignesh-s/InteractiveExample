@@ -5,6 +5,7 @@
 //  Created by Vignesh on 31/03/2018.
 //
 
+import Charts
 import UIKit
 import UIKit.UIGestureRecognizerSubclass
 
@@ -26,16 +27,19 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var plantsReadyForWateringView: UIView!
     @IBOutlet weak var plantsReadyBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var plantsReadyHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var plantsReadyHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var popupView: UIView!
     @IBOutlet weak var popupViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomButtonBar: UIView!
     @IBOutlet weak var wateringInfo: UIStackView!
     @IBOutlet weak var plantsInfo: UIStackView!
+    @IBOutlet weak var chartView: LineChartView!
     
     private let popupOffset: CGFloat = -230
-    private let plantsReadyPopupOffset: CGFloat = 10
+    private let plantsReadyPopupOffset: CGFloat = -170
     private let plantsReadyCorrectOffset: CGFloat = 130
+    
+    private var plantsReadyTopConstraint = NSLayoutConstraint()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,13 +55,21 @@ class ViewController: UIViewController {
         plantsReadyForWateringView.layer.maskedCorners =
             [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         
-        plantsReadyHeightConstraint.constant = 300
+        plantsReadyHeightConstraint.constant = 470
         popupView.layer.cornerRadius = 15
         popupView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         popupViewBottomConstraint.constant = popupOffset
         
+        plantsReadyTopConstraint = plantsReadyForWateringView.topAnchor
+            .constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor)
+        
+        plantsReadyTopConstraint.isActive = false
+        
         wateringInfo.alpha = 0
         plantsInfo.alpha = 0
+        chartView.alpha = 0
+        
+        setChartData()
     }
     
     // MARK: - Animation
@@ -164,14 +176,22 @@ class ViewController: UIViewController {
         // ensure that the animators array is empty (which implies new animations need to be created)
         guard runningAnimatorsForPlantsReady.isEmpty else { return }
         
+        if state == .closed {
+            self.chartView.alpha = 0
+        }
+        
         // an animator for the transition
         let transitionAnimator =
             UIViewPropertyAnimator(duration: duration, dampingRatio: 1, animations: {
                 switch state {
                 case .open:
+                    self.plantsReadyHeightConstraint.isActive = false
+                    self.plantsReadyTopConstraint.isActive = true
                     self.plantsReadyBottomConstraint.constant = self.plantsReadyCorrectOffset
                 case .closed:
                     self.plantsReadyBottomConstraint.constant = self.plantsReadyPopupOffset
+                    self.plantsReadyTopConstraint.isActive = false
+                    self.plantsReadyHeightConstraint.isActive = true
                 }
                 self.view.layoutIfNeeded()
         })
@@ -192,9 +212,15 @@ class ViewController: UIViewController {
             // manually reset the constraint positions
             switch self.currentStateOfPlantsReady {
             case .open:
+                self.plantsReadyHeightConstraint.isActive = false
+                self.plantsReadyTopConstraint.isActive = true
                 self.plantsReadyBottomConstraint.constant = self.plantsReadyCorrectOffset
+                self.chartView.animate(yAxisDuration: 1)
+                self.chartView.alpha = 1
             case .closed:
                 self.plantsReadyBottomConstraint.constant = self.plantsReadyPopupOffset
+                self.plantsReadyTopConstraint.isActive = false
+                self.plantsReadyHeightConstraint.isActive = true
             }
             
             // remove all running animators
@@ -291,7 +317,7 @@ class ViewController: UIViewController {
             
             // variable setup
             let translation = recognizer.translation(in: plantsReadyForWateringView)
-            var fraction = -translation.y / plantsReadyPopupOffset
+            var fraction = -translation.y / -plantsReadyPopupOffset
             
             // adjust the fraction for the current state and reversed state
             if currentStateOfPlantsReady == .open { fraction *= -1 }
@@ -335,6 +361,76 @@ class ViewController: UIViewController {
             
         default:
             ()
+        }
+    }
+    
+    func setChartData() {
+        
+        let values = [
+            ChartDataEntry(x: 1, y: 5),
+            ChartDataEntry(x: 2, y: 2),
+            ChartDataEntry(x: 3, y: 8),
+            ChartDataEntry(x: 4, y: 10),
+            ChartDataEntry(x: 5, y: 15),
+            ChartDataEntry(x: 6, y: 5),
+            ChartDataEntry(x: 7, y: 1)
+        ]
+        
+        let dataSet = LineChartDataSet(values: values, label: "")
+        dataSet.drawIconsEnabled = false
+        dataSet.setColor(.white)
+        dataSet.lineWidth = 1
+        dataSet.circleRadius = 0
+        dataSet.drawValuesEnabled = false
+        
+        let gradientColors = [ChartColorTemplates.colorFromString("#0000ccaa").cgColor,
+                              ChartColorTemplates.colorFromString("#00ccaa").cgColor]
+        
+        let gradient = CGGradient(colorsSpace: nil,
+                                  colors: gradientColors as CFArray, locations: nil)!
+        
+        dataSet.fillAlpha = 1
+        dataSet.fill = Fill(linearGradient: gradient, angle: 90)
+        dataSet.drawFilledEnabled = true
+        
+        let llXAxis = ChartLimitLine(limit: 4, label: "")
+        llXAxis.lineWidth = 3
+        llXAxis.lineColor = .darkGray
+        
+        let xAxis = chartView.xAxis
+        xAxis.labelFont = .boldSystemFont(ofSize: 11)
+        xAxis.labelTextColor = .white
+        xAxis.labelPosition = .bottom
+        xAxis.axisMinimum = 1
+        xAxis.axisMaximum = 7
+        xAxis.valueFormatter = GraphAxisLabelFormatter()
+        xAxis.drawGridLinesEnabled = false
+        xAxis.addLimitLine(llXAxis)
+        
+        let leftAxis = chartView.leftAxis
+        leftAxis.labelFont = .boldSystemFont(ofSize: 11)
+        leftAxis.labelTextColor = .white
+        leftAxis.granularity = 5
+        leftAxis.axisMaximum = 20
+        leftAxis.drawGridLinesEnabled = false
+        leftAxis.drawAxisLineEnabled = false
+        
+        let rightAxis = chartView.rightAxis
+        rightAxis.drawGridLinesEnabled = false
+        rightAxis.drawAxisLineEnabled = false
+        
+        let data = LineChartData(dataSet: dataSet)
+        
+        chartView.data = data
+        chartView.chartDescription?.enabled = false
+        chartView.dragEnabled = false
+        chartView.setScaleEnabled(false)
+        chartView.pinchZoomEnabled = false
+        chartView.legend.enabled = false
+        
+        DispatchQueue.main.async {
+            self.chartView.setNeedsDisplay()
+            self.viewDidLayoutSubviews()
         }
     }
 
