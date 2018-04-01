@@ -21,6 +21,24 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LudisiaDiscolor" translatesAutoresizingMaskIntoConstraints="NO" id="N0M-yM-oKt">
                                 <rect key="frame" x="0.0" y="44" width="375" height="734"/>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jff-1Y-5cM">
+                                <rect key="frame" x="0.0" y="98" width="375" height="240"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plants Ready for Watering" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GuI-pc-ggf">
+                                        <rect key="frame" x="20" y="20" width="335" height="19.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="GuI-pc-ggf" secondAttribute="trailing" constant="20" id="0At-f2-56V"/>
+                                    <constraint firstItem="GuI-pc-ggf" firstAttribute="leading" secondItem="Jff-1Y-5cM" secondAttribute="leading" constant="20" id="6gs-ak-3fD"/>
+                                    <constraint firstAttribute="height" constant="240" id="FXE-Cn-5YP"/>
+                                    <constraint firstItem="GuI-pc-ggf" firstAttribute="top" secondItem="Jff-1Y-5cM" secondAttribute="top" constant="20" id="fQq-QK-fk8"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZwK-si-eWB">
                                 <rect key="frame" x="0.0" y="318" width="375" height="380"/>
                                 <subviews>
@@ -338,12 +356,15 @@
                             <constraint firstItem="BbJ-JA-dO3" firstAttribute="top" secondItem="ZwK-si-eWB" secondAttribute="bottom" id="AdP-n7-NMf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="N0M-yM-oKt" secondAttribute="trailing" id="BZ9-dY-5fi"/>
                             <constraint firstAttribute="bottom" secondItem="BbJ-JA-dO3" secondAttribute="bottom" id="E42-qu-k2N"/>
+                            <constraint firstItem="Jff-1Y-5cM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="HVp-oX-X7z"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="BbJ-JA-dO3" secondAttribute="trailing" id="JMS-CA-GZs"/>
+                            <constraint firstItem="BbJ-JA-dO3" firstAttribute="top" secondItem="Jff-1Y-5cM" secondAttribute="bottom" constant="360" id="d3a-E4-cxz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BbJ-JA-dO3" secondAttribute="bottom" id="dMk-Re-FJj"/>
                             <constraint firstItem="N0M-yM-oKt" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="n7S-MK-dyZ"/>
                             <constraint firstItem="BbJ-JA-dO3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="q7J-ZN-s1d"/>
                             <constraint firstItem="ZwK-si-eWB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qbf-Pa-AyV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZwK-si-eWB" secondAttribute="trailing" id="tjM-rt-QWG"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Jff-1Y-5cM" secondAttribute="trailing" id="u7K-Be-kBD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <variation key="default">
@@ -355,6 +376,9 @@
                     <connections>
                         <outlet property="bottomButtonBar" destination="BbJ-JA-dO3" id="4L3-us-ulI"/>
                         <outlet property="plantsInfo" destination="RVM-qS-2nx" id="IrJ-pA-NzR"/>
+                        <outlet property="plantsReadyBottomConstraint" destination="d3a-E4-cxz" id="xwE-oi-JiY"/>
+                        <outlet property="plantsReadyForWateringView" destination="Jff-1Y-5cM" id="MQJ-7h-HRU"/>
+                        <outlet property="plantsReadyHeightConstraint" destination="FXE-Cn-5YP" id="g6y-gm-dyP"/>
                         <outlet property="popupView" destination="ZwK-si-eWB" id="pRe-3s-Hci"/>
                         <outlet property="popupViewBottomConstraint" destination="AdP-n7-NMf" id="Agz-nm-mqz"/>
                         <outlet property="wateringInfo" destination="Mwd-k3-Tch" id="Nsj-Bl-961"/>
