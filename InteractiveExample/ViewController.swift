@@ -102,6 +102,9 @@ class ViewController: UIViewController {
     /// Animates the transition, if the animation is not already running.
     private func animateTransitionIfNeeded(to state: State, duration: TimeInterval) {
         
+        if state == .open && self.currentStateOfPlantsReady == .open {
+            self.closePlantsReadyForWatering()
+        }
         // ensure that the animators array is empty (which implies new animations need to be created)
         guard runningAnimators.isEmpty else { return }
         
@@ -367,6 +370,10 @@ class ViewController: UIViewController {
         default:
             ()
         }
+    }
+    
+    func closePlantsReadyForWatering() {
+        animateTransitionIfNeededForPlantsReady(to: currentStateOfPlantsReady.opposite, duration: 2)
     }
     
     func setChartData() {
