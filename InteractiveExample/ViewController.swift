@@ -25,6 +25,7 @@ extension State {
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var plantsReadyForWateringView: UIView!
     @IBOutlet weak var plantsReadyBottomConstraint: NSLayoutConstraint!
     @IBOutlet var plantsReadyHeightConstraint: NSLayoutConstraint!
@@ -109,8 +110,10 @@ class ViewController: UIViewController {
             switch state {
             case .open:
                 self.popupViewBottomConstraint.constant = 0
+                self.backgroundImage.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
             case .closed:
                 self.popupViewBottomConstraint.constant = self.popupOffset
+                self.backgroundImage.transform = CGAffineTransform(scaleX: 1, y: 1)
             }
             self.view.layoutIfNeeded()
         })
@@ -188,10 +191,12 @@ class ViewController: UIViewController {
                     self.plantsReadyHeightConstraint.isActive = false
                     self.plantsReadyTopConstraint.isActive = true
                     self.plantsReadyBottomConstraint.constant = self.plantsReadyCorrectOffset
+                    self.backgroundImage.transform = CGAffineTransform(scaleX: 0.9, y: 0.95)
                 case .closed:
                     self.plantsReadyBottomConstraint.constant = self.plantsReadyPopupOffset
                     self.plantsReadyTopConstraint.isActive = false
                     self.plantsReadyHeightConstraint.isActive = true
+                    self.backgroundImage.transform = CGAffineTransform(scaleX: 1, y: 1)
                 }
                 self.view.layoutIfNeeded()
         })
