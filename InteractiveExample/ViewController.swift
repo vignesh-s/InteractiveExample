@@ -35,16 +35,23 @@ class ViewController: UIViewController {
     @IBOutlet weak var wateringInfo: UIStackView!
     @IBOutlet weak var plantsInfo: UIStackView!
     @IBOutlet weak var chartView: LineChartView!
+    @IBOutlet weak var daysRemainingCount: UILabel!
+    @IBOutlet weak var daysText: UILabel!
+    @IBOutlet weak var wateredButton: UIButton!
     
     private let popupOffset: CGFloat = -230
     private let plantsReadyPopupOffset: CGFloat = -170
     private let plantsReadyCorrectOffset: CGFloat = 130
     
     private var plantsReadyTopConstraint = NSLayoutConstraint()
+    
+    private var timer: Timer = Timer()
+    private var remainingDays: Int = 1
 
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
+        panRecognizer.delegate = self
         popupView.addGestureRecognizer(panRecognizer)
         plantsReadyForWateringView.addGestureRecognizer(plantsReadyPanRecognizer)
     }
@@ -376,6 +383,46 @@ class ViewController: UIViewController {
         animateTransitionIfNeededForPlantsReady(to: currentStateOfPlantsReady.opposite, duration: 2)
     }
     
+    @IBAction func onClickWateredButton(_ sender: UIButton) {
+        wateredButton.isEnabled = false
+        if currentState == .open {
+            animateTransitionIfNeeded(to: currentState.opposite, duration: 1)
+        }
+        timer = Timer.scheduledTimer(timeInterval: 0.10, target: self, selector:
+            #selector(self.increaseRemainingDays), userInfo: nil, repeats: true)
+        
+        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
+    }
+    
+    @objc func increaseRemainingDays() {
+        remainingDays += 1
+        daysRemainingCount.text = "\(remainingDays)"
+        daysText.text = "days"
+        if remainingDays == 7 {
+            timer.invalidate()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.startNextWateringDaysTimer()
+            }
+        }
+    }
+    
+    func startNextWateringDaysTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 0.20, target: self, selector:
+            #selector(self.decreaseRemainingDays), userInfo: nil, repeats: true)
+        
+        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
+    }
+    
+    @objc func decreaseRemainingDays() {
+        remainingDays -= 1
+        daysRemainingCount.text = "\(remainingDays)"
+        if remainingDays == 1 {
+            daysText.text = "day"
+            timer.invalidate()
+            wateredButton.isEnabled = true
+        }
+    }
+    
     func setChartData() {
         
         let values = [
@@ -445,7 +492,16 @@ class ViewController: UIViewController {
             self.viewDidLayoutSubviews()
         }
     }
+    
+}
 
+extension ViewController: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldReceive touch: UITouch) -> Bool {
+        
+        return touch.view == nil || !touch.view!.isDescendant(of: wateredButton)
+    }
 }
 
 // MARK: - InstantPanGestureRecognizer

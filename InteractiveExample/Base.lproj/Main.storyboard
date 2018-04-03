@@ -96,12 +96,26 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="3f0-uS-Xx3">
                                                                 <rect key="frame" x="0.0" y="28" width="241" height="66"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fuw-Pt-nIv">
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hZ8-FG-hEL">
                                                                         <rect key="frame" x="0.0" y="0.0" width="241" height="48"/>
-                                                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="40"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
+                                                                        <subviews>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fuw-Pt-nIv">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="30" height="48"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" constant="30" id="nb2-yd-0vu"/>
+                                                                                </constraints>
+                                                                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="40"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xHJ-ob-vdM">
+                                                                                <rect key="frame" x="30" y="0.0" width="211" height="48"/>
+                                                                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="40"/>
+                                                                                <nil key="textColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                        </subviews>
+                                                                    </stackView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="watering every 7 days" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ljk-pC-L9b">
                                                                         <rect key="frame" x="0.0" y="50" width="241" height="16"/>
                                                                         <constraints>
@@ -130,6 +144,9 @@
                                                                 <integer key="value" value="20"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="onClickWateredButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sm3-u6-o2Q"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
@@ -413,12 +430,15 @@
                         <outlet property="backgroundImage" destination="N0M-yM-oKt" id="Udr-vx-5U2"/>
                         <outlet property="bottomButtonBar" destination="BbJ-JA-dO3" id="4L3-us-ulI"/>
                         <outlet property="chartView" destination="z3E-z5-JLj" id="PHn-wU-cwT"/>
+                        <outlet property="daysRemainingCount" destination="Fuw-Pt-nIv" id="wLZ-4i-sg0"/>
+                        <outlet property="daysText" destination="xHJ-ob-vdM" id="48b-Of-z9S"/>
                         <outlet property="plantsInfo" destination="RVM-qS-2nx" id="IrJ-pA-NzR"/>
                         <outlet property="plantsReadyBottomConstraint" destination="d3a-E4-cxz" id="xwE-oi-JiY"/>
                         <outlet property="plantsReadyForWateringView" destination="Jff-1Y-5cM" id="MQJ-7h-HRU"/>
                         <outlet property="plantsReadyHeightConstraint" destination="FXE-Cn-5YP" id="g6y-gm-dyP"/>
                         <outlet property="popupView" destination="ZwK-si-eWB" id="pRe-3s-Hci"/>
                         <outlet property="popupViewBottomConstraint" destination="AdP-n7-NMf" id="Agz-nm-mqz"/>
+                        <outlet property="wateredButton" destination="uiX-st-qNc" id="rMl-Uf-1cK"/>
                         <outlet property="wateringInfo" destination="Mwd-k3-Tch" id="Nsj-Bl-961"/>
                     </connections>
                 </viewController>
