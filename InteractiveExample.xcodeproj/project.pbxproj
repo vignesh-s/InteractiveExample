@@ -14,6 +14,7 @@
 		2F3F1AE5206EBDFE00467673 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F3F1AE4206EBDFE00467673 /* Assets.xcassets */; };
 		2F3F1AE8206EBDFE00467673 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F3F1AE6206EBDFE00467673 /* LaunchScreen.storyboard */; };
 		2F3F1AF3206EBDFE00467673 /* InteractiveExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3F1AF2206EBDFE00467673 /* InteractiveExampleTests.swift */; };
+		2F4E3AC02076B08A009C5BC1 /* PlantsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4E3ABF2076B08A009C5BC1 /* PlantsCollectionViewCell.swift */; };
 		2F515DC1206FBA2D004CD0B1 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F515DC0206FBA2D004CD0B1 /* UIViewExtension.swift */; };
 		2F515DC520712236004CD0B1 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F515DC420712236004CD0B1 /* Charts.framework */; };
 /* End PBXBuildFile section */
@@ -40,6 +41,7 @@
 		2F3F1AEE206EBDFE00467673 /* InteractiveExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InteractiveExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F3F1AF2206EBDFE00467673 /* InteractiveExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveExampleTests.swift; sourceTree = "<group>"; };
 		2F3F1AF4206EBDFE00467673 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F4E3ABF2076B08A009C5BC1 /* PlantsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F515DC0206FBA2D004CD0B1 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		2F515DC420712236004CD0B1 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = Carthage/Build/iOS/Charts.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,9 +88,10 @@
 			isa = PBXGroup;
 			children = (
 				2F3F1ADD206EBDFE00467673 /* AppDelegate.swift */,
+				2F3D42B020712FD400FBBDE7 /* GraphAxisLabelFormatter.swift */,
+				2F4E3ABF2076B08A009C5BC1 /* PlantsCollectionViewCell.swift */,
 				2F515DC0206FBA2D004CD0B1 /* UIViewExtension.swift */,
 				2F3F1ADF206EBDFE00467673 /* ViewController.swift */,
-				2F3D42B020712FD400FBBDE7 /* GraphAxisLabelFormatter.swift */,
 				2F3F1AE1206EBDFE00467673 /* Main.storyboard */,
 				2F3F1AE4206EBDFE00467673 /* Assets.xcassets */,
 				2F3F1AE6206EBDFE00467673 /* LaunchScreen.storyboard */,
@@ -237,6 +240,7 @@
 				2F515DC1206FBA2D004CD0B1 /* UIViewExtension.swift in Sources */,
 				2F3F1AE0206EBDFE00467673 /* ViewController.swift in Sources */,
 				2F3F1ADE206EBDFE00467673 /* AppDelegate.swift in Sources */,
+				2F4E3AC02076B08A009C5BC1 /* PlantsCollectionViewCell.swift in Sources */,
 				2F3D42B120712FD400FBBDE7 /* GraphAxisLabelFormatter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

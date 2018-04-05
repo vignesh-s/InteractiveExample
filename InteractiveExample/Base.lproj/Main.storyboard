@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -75,6 +75,52 @@
                                     <constraint firstItem="lFL-IZ-T0Q" firstAttribute="top" secondItem="GuI-pc-ggf" secondAttribute="bottom" constant="124" id="oje-pv-Lz8"/>
                                 </constraints>
                             </view>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kf5-x2-h9r">
+                                <rect key="frame" x="20" y="104" width="335" height="70"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="Zk6-tH-3vG"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="5" id="Wv0-ZR-GFG">
+                                    <size key="itemSize" width="70" height="70"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PlantsCollectionViewCell" id="xvP-44-R6C" customClass="PlantsCollectionViewCell" customModule="InteractiveExample" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plant2" translatesAutoresizingMaskIntoConstraints="NO" id="seB-al-dge">
+                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="10"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="seB-al-dge" firstAttribute="top" secondItem="xvP-44-R6C" secondAttribute="top" id="BV8-fK-hbS"/>
+                                            <constraint firstItem="seB-al-dge" firstAttribute="leading" secondItem="xvP-44-R6C" secondAttribute="leading" id="ohA-J3-d80"/>
+                                            <constraint firstAttribute="trailing" secondItem="seB-al-dge" secondAttribute="trailing" id="xeS-68-BVF"/>
+                                            <constraint firstAttribute="bottom" secondItem="seB-al-dge" secondAttribute="bottom" id="zzN-55-9uL"/>
+                                        </constraints>
+                                        <size key="customSize" width="70" height="70"/>
+                                        <connections>
+                                            <outlet property="thumbnailImage" destination="seB-al-dge" id="nMY-dP-Tg2"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="wfD-Ib-D4m"/>
+                                </connections>
+                            </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZwK-si-eWB">
                                 <rect key="frame" x="0.0" y="502" width="375" height="380"/>
                                 <subviews>
@@ -409,37 +455,38 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BbJ-JA-dO3" secondAttribute="top" constant="84" id="E42-qu-k2N"/>
                             <constraint firstItem="Jff-1Y-5cM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="HVp-oX-X7z"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="BbJ-JA-dO3" secondAttribute="trailing" id="JMS-CA-GZs"/>
+                            <constraint firstItem="kf5-x2-h9r" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Kuo-2e-PeY"/>
+                            <constraint firstItem="BbJ-JA-dO3" firstAttribute="top" secondItem="kf5-x2-h9r" secondAttribute="bottom" constant="708" id="MFw-iJ-WFQ"/>
                             <constraint firstAttribute="bottom" secondItem="BbJ-JA-dO3" secondAttribute="bottom" id="VqS-nf-QeD"/>
                             <constraint firstItem="BbJ-JA-dO3" firstAttribute="top" secondItem="Jff-1Y-5cM" secondAttribute="bottom" constant="360" id="d3a-E4-cxz"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BbJ-JA-dO3" secondAttribute="bottom" id="dMk-Re-FJj"/>
                             <constraint firstItem="N0M-yM-oKt" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="-20" id="n7S-MK-dyZ"/>
                             <constraint firstItem="BbJ-JA-dO3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="q7J-ZN-s1d"/>
                             <constraint firstItem="ZwK-si-eWB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qbf-Pa-AyV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZwK-si-eWB" secondAttribute="trailing" id="tjM-rt-QWG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Jff-1Y-5cM" secondAttribute="trailing" id="u7K-Be-kBD"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="kf5-x2-h9r" secondAttribute="trailing" constant="20" id="vwt-Km-9zL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="dMk-Re-FJj"/>
-                            </mask>
-                        </variation>
                     </view>
                     <size key="freeformSize" width="375" height="1000"/>
                     <connections>
                         <outlet property="backgroundImage" destination="N0M-yM-oKt" id="Udr-vx-5U2"/>
                         <outlet property="bottomButtonBar" destination="BbJ-JA-dO3" id="4L3-us-ulI"/>
                         <outlet property="chartView" destination="z3E-z5-JLj" id="PHn-wU-cwT"/>
+                        <outlet property="collectionViewBottomConstraint" destination="MFw-iJ-WFQ" id="Tsw-yQ-tcH"/>
                         <outlet property="daysRemainingCount" destination="Fuw-Pt-nIv" id="wLZ-4i-sg0"/>
                         <outlet property="daysText" destination="xHJ-ob-vdM" id="48b-Of-z9S"/>
+                        <outlet property="plantsCollectionView" destination="kf5-x2-h9r" id="jjz-NL-ooJ"/>
                         <outlet property="plantsInfo" destination="RVM-qS-2nx" id="IrJ-pA-NzR"/>
                         <outlet property="plantsReadyBottomConstraint" destination="d3a-E4-cxz" id="xwE-oi-JiY"/>
                         <outlet property="plantsReadyForWateringView" destination="Jff-1Y-5cM" id="MQJ-7h-HRU"/>
                         <outlet property="plantsReadyHeightConstraint" destination="FXE-Cn-5YP" id="g6y-gm-dyP"/>
                         <outlet property="popupView" destination="ZwK-si-eWB" id="pRe-3s-Hci"/>
                         <outlet property="popupViewBottomConstraint" destination="AdP-n7-NMf" id="Agz-nm-mqz"/>
+                        <outlet property="todaysDate" destination="9HY-AZ-ooB" id="aQm-Ma-exY"/>
                         <outlet property="wateredButton" destination="uiX-st-qNc" id="rMl-Uf-1cK"/>
                         <outlet property="wateringInfo" destination="Mwd-k3-Tch" id="Nsj-Bl-961"/>
+                        <outlet property="weeklyWorkLoadLabel" destination="lFL-IZ-T0Q" id="uVE-Km-gZw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -452,5 +499,6 @@
         <image name="LudisiaDiscolor" width="1368" height="1824"/>
         <image name="MyPlants" width="32" height="32"/>
         <image name="Profile" width="32" height="32"/>
+        <image name="plant2" width="300" height="334"/>
     </resources>
 </document>

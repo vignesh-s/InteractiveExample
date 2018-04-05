@@ -39,6 +39,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var daysText: UILabel!
     @IBOutlet weak var wateredButton: UIButton!
     
+    @IBOutlet weak var plantsCollectionView: UICollectionView!
+    @IBOutlet var collectionViewBottomConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var weeklyWorkLoadLabel: UILabel!
+    @IBOutlet weak var todaysDate: UIStackView!
+    
+    private let images = [#imageLiteral(resourceName: "LudisiaDiscolor"), #imageLiteral(resourceName: "plant2"), #imageLiteral(resourceName: "plant3"), #imageLiteral(resourceName: "plant4"), #imageLiteral(resourceName: "plant5")]
     private let popupOffset: CGFloat = -230
     private let plantsReadyPopupOffset: CGFloat = -170
     private let plantsReadyCorrectOffset: CGFloat = 130
@@ -47,6 +54,8 @@ class ViewController: UIViewController {
     
     private var timer: Timer = Timer()
     private var remainingDays: Int = 1
+    
+    private var plantsClosedStateY: CGFloat!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,8 +85,16 @@ class ViewController: UIViewController {
         wateringInfo.alpha = 0
         plantsInfo.alpha = 0
         chartView.alpha = 0
+        weeklyWorkLoadLabel.alpha = 0
+        todaysDate.alpha = 0
+        
+        collectionViewBottomConstraint.constant = 180
         
         setChartData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        plantsClosedStateY = plantsCollectionView.frame.origin.y
     }
     
     // MARK: - Animation
@@ -242,11 +259,50 @@ class ViewController: UIViewController {
             self.runningAnimatorsForPlantsReady.removeAll()
             
         }
-        // start all animators
+        var curve: UIViewAnimationCurve
+        if state == .open {
+            curve = .easeIn
+        } else {
+            curve = .easeOut
+        }
+        let collectionViewAnimation =
+            UIViewPropertyAnimator(duration: duration, curve: .linear, animations: {
+                switch state {
+                case .open:
+                    self.plantsCollectionView.frame.origin.y = self.plantsReadyForWateringView.frame.origin.y + 54
+                case .closed:
+                    self.plantsCollectionView.frame.origin.y = self.plantsClosedStateY
+                }
+            })
+        
+        let fadeAnimation =
+            UIViewPropertyAnimator(duration: duration, curve: curve, animations: {
+                
+                switch state {
+                case .open:
+                    self.weeklyWorkLoadLabel.alpha = 1
+                    self.todaysDate.alpha = 1
+                case .closed:
+                    self.weeklyWorkLoadLabel.alpha = 0
+                    self.todaysDate.alpha = 0
+                }
+            })
+
+        var collectionViewAnimationDelay: Double
+        if state == .open {
+            collectionViewAnimationDelay = 0.9
+        } else {
+            collectionViewAnimationDelay = 0
+        }
         transitionAnimator.startAnimation()
+        collectionViewAnimation.startAnimation(afterDelay: collectionViewAnimationDelay)
+        fadeAnimation.startAnimation()
+        
         
         // keep track of all running animators
         runningAnimatorsForPlantsReady.append(transitionAnimator)
+        runningAnimatorsForPlantsReady.append(collectionViewAnimation)
+        runningAnimatorsForPlantsReady.append(fadeAnimation)
     }
     
     @objc private func popupViewPanned(recognizer: UIPanGestureRecognizer) {
@@ -355,7 +411,6 @@ class ViewController: UIViewController {
                     { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
                 break
             }
-            
             // reverse the animations based on their current state and pan motion
             switch currentStateOfPlantsReady {
             case .open:
@@ -501,6 +556,25 @@ extension ViewController: UIGestureRecognizerDelegate {
                            shouldReceive touch: UITouch) -> Bool {
         
         return touch.view == nil || !touch.view!.isDescendant(of: wateredButton)
+    }
+}
+
+extension ViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
+            "PlantsCollectionViewCell", for: indexPath) as! PlantsCollectionViewCell
+        
+        cell.thumbnailImage.image = images[indexPath.row]
+        return cell
     }
 }
 
