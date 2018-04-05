@@ -56,6 +56,8 @@ class ViewController: UIViewController {
     private var remainingDays: Int = 1
     
     private var plantsClosedStateY: CGFloat!
+    private var dropToTickImages = [UIImage]()
+    private var tickToDropImages = [UIImage]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +68,16 @@ class ViewController: UIViewController {
     }
     
     private func layout() {
+        
+        wateredButton.setImage(UIImage(named: "Comp 1_00000")!, for: .normal)
+        for index in 0...67 {
+            let imageName = String(format: "Comp 1_00%03d", index)
+            dropToTickImages.append(UIImage(named: imageName)!)
+        }
+        for index in 67...134 {
+            let imageName = String(format: "Comp 1_00%03d", index)
+            tickToDropImages.append(UIImage(named: imageName)!)
+        }
         
         plantsReadyBottomConstraint.constant = plantsReadyPopupOffset
         plantsReadyForWateringView.layer.cornerRadius = 15
@@ -439,6 +451,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onClickWateredButton(_ sender: UIButton) {
+        wateredButton.imageView!.animationImages = dropToTickImages
+        wateredButton.imageView!.animationDuration = 0.70
+        wateredButton.imageView!.startAnimating()
         wateredButton.isEnabled = false
         if currentState == .open {
             animateTransitionIfNeeded(to: currentState.opposite, duration: 1)
@@ -455,6 +470,8 @@ class ViewController: UIViewController {
         daysText.text = "days"
         if remainingDays == 7 {
             timer.invalidate()
+            wateredButton.setImage(UIImage(named: "Comp 1_00067"), for: .normal)
+            wateredButton.imageView!.stopAnimating()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.startNextWateringDaysTimer()
             }
@@ -466,6 +483,9 @@ class ViewController: UIViewController {
             #selector(self.decreaseRemainingDays), userInfo: nil, repeats: true)
         
         RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
+        wateredButton.imageView!.animationImages = tickToDropImages
+        wateredButton.imageView!.animationDuration = 1.4
+        wateredButton.imageView!.startAnimating()
     }
     
     @objc func decreaseRemainingDays() {
@@ -474,6 +494,8 @@ class ViewController: UIViewController {
         if remainingDays == 1 {
             daysText.text = "day"
             timer.invalidate()
+            wateredButton.setImage(UIImage(named: "Comp 1_00000"), for: .normal)
+            wateredButton.imageView!.stopAnimating()
             wateredButton.isEnabled = true
         }
     }
