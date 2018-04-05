@@ -514,8 +514,8 @@ class ViewController: UIViewController {
         
         let dataSet = LineChartDataSet(values: values, label: "")
         dataSet.drawIconsEnabled = false
-        dataSet.setColor(.white)
-        dataSet.lineWidth = 1
+        dataSet.setColor(getRGB("00CCAA"))
+        dataSet.lineWidth = 2
         dataSet.circleRadius = 0
         dataSet.drawValuesEnabled = false
         
@@ -568,6 +568,18 @@ class ViewController: UIViewController {
             self.chartView.setNeedsDisplay()
             self.viewDidLayoutSubviews()
         }
+    }
+    
+    func getRGB(_ hex: String) -> UIColor {
+        var rgbValue:UInt32 = 0
+        Scanner(string: hex).scanHexInt32(&rgbValue)
+        
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
     }
     
 }
